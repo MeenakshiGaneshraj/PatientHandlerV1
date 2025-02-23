@@ -42,10 +42,12 @@ jobs:
           libgbm1 \
           wget
 
-    - name: Install Playwright
+    - name: Install Playwright browsers
       run: |
-        # Install Playwright using npm (this also installs the necessary browser binaries)
+        # Install the Playwright package
         npm install playwright
+        # Ensure browsers are installed
+        npx playwright install
 
     - name: Run NUnit tests and generate TRX report
       run: dotnet test --logger "trx;LogFileName=test-results.trx"
