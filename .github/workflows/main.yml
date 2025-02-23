@@ -29,13 +29,22 @@ jobs:
 
     - name: Install Playwright dependencies
       run: |
-        # Install required dependencies for Playwright
+        # Install required system dependencies for Playwright
         sudo apt-get update
-        sudo apt-get install -y libnss3 libatk-bridge2.0-0 libatk1.0-0 libcups2 libxss1 libasound2 libnspr4 libnss3 libgbm1
+        sudo apt-get install -y \
+          libnss3 \
+          libatk-bridge2.0-0 \
+          libatk1.0-0 \
+          libcups2 \
+          libxss1 \
+          libnspr4 \
+          libnss3 \
+          libgbm1 \
+          wget
 
     - name: Install Playwright
       run: |
-        # Install Playwright via npm
+        # Install Playwright using npm (this also installs the necessary browser binaries)
         npm install playwright
 
     - name: Run NUnit tests and generate TRX report
