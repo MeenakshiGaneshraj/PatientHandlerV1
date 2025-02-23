@@ -27,9 +27,6 @@ jobs:
     - name: Build the solution
       run: dotnet build --no-restore
 
-    - name: Install Playwright
-      run: pwsh ./path/to/playwright.ps1 install
-
     - name: Run NUnit tests and generate TRX report
       run: dotnet test --logger "trx;LogFileName=test-results.trx"
 
