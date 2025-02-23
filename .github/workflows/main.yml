@@ -27,6 +27,17 @@ jobs:
     - name: Build the solution
       run: dotnet build --no-restore
 
+    - name: Install Playwright dependencies
+      run: |
+        # Install required dependencies for Playwright
+        sudo apt-get update
+        sudo apt-get install -y libnss3 libatk-bridge2.0-0 libatk1.0-0 libcups2 libxss1 libasound2 libnspr4 libnss3 libgbm1
+
+    - name: Install Playwright
+      run: |
+        # Install Playwright via npm
+        npm install playwright
+
     - name: Run NUnit tests and generate TRX report
       run: dotnet test --logger "trx;LogFileName=test-results.trx"
 
