@@ -32,6 +32,7 @@ namespace PatientHandlerV1
             var ErrorCode = responseJson?.GetProperty("ErrorCode").GetInt32();               
             Assert.AreEqual(42014, ErrorCode);
         }
+
         [TestMethod]
         public async Task TC_002_Missing_First_Name_and_Date_of_Birth()
         {
@@ -58,6 +59,7 @@ namespace PatientHandlerV1
             var ErrorCode = responseJson?.GetProperty("ErrorCode").GetInt32();
             Assert.AreEqual(42074, ErrorCode);
         }
+
         [TestMethod]
         public async Task TC_003_New_record()
         {
@@ -85,9 +87,9 @@ namespace PatientHandlerV1
             var Recip_ID = responseJson?.GetProperty("Recip_ID").GetString();
             Assert.AreEqual("003", Recip_ID);
         }
+
         [TestMethod]
         public async Task TC_004_NO_PERSON_record()
-
         {
             // Prepare the payload for the POST request
             var data = new Dictionary<string, object>
@@ -111,9 +113,9 @@ namespace PatientHandlerV1
             var ErrorCode = responseJson?.GetProperty("ErrorCode").GetInt32();
             Assert.AreEqual(46008, ErrorCode);
         }
+
         [TestMethod]
         public async Task TC_005_Multiple_PERSON_records()
-
         {
             // Prepare the payload for the POST request            
             var data = new Dictionary<string, object>
@@ -138,9 +140,9 @@ namespace PatientHandlerV1
             var ErrorCode = responseJson?.GetProperty("ErrorCode").GetInt32();
             Assert.AreEqual(43034, ErrorCode);
         }
+
         [TestMethod]
         public async Task TC_006_First_Name_and_Date_of_Birth_mismatch()
-
         {
             // Prepare the payload for the POST request
             
@@ -164,6 +166,7 @@ namespace PatientHandlerV1
             var ErrorCode = responseJson?.GetProperty("ErrorCode").GetInt32();
             Assert.AreEqual(43027, ErrorCode);
         }
+
         [TestMethod]
         public async Task TC_007_Exact_match_with_existing_PERSON_record()
         {
@@ -189,6 +192,7 @@ namespace PatientHandlerV1
             var Recip_ID = responseJson?.GetProperty("Recip_ID").GetString();
             Assert.AreEqual("007", Recip_ID);
         }
+
         [TestMethod]
         public async Task TC_008_Update_existing_PERSON_record()
         {

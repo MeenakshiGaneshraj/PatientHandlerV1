@@ -1,0 +1,63 @@
+name: Run NUnit Tests and Save Report
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x' # Adjust based on your .NET version
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build the solution
+      run: dotnet build --no-restore
+
+    - name: Install Playwright
+      run: pwsh ./path/to/playwright.ps1 install
+
+    - name: Run NUnit tests and generate TRX report
+      run: dotnet test --logger "trx;LogFileName=test-results.trx"
+
+    - name: List All Files (Debugging)
+      run: find . -name "*.trx"
+
+    - name: Upload NUnit Test Report (TRX)
+      uses: actions/upload-artifact@v4
+      with:
+        name: NUnit-Test-Results
+        path: ./PatientHandlerV1/TestResults/test-results.trx
+
+    # Convert TRX to JUnit format
+    - name: Install trx2junit
+      run: dotnet tool install -g trx2junit
+
+    - name: Convert TRX to JUnit
+      run: |
+        trx2junit ./PatientHandlerV1/TestResults/test-results.trx --output ./PatientHandlerV1/TestResults/test-results.xml
+
+    - name: Upload JUnit Test Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: NUnit-JUnit-Test-Report
+        path: ./PatientHandlerV1/TestResults/test-results.xml
+
+    # Ensure test-summary uses a single file, not a directory
+    - name: Publish Test Summary in GitHub UI
+      uses: test-summary/action@v2
+      with:
+        paths: ./PatientHandlerV1/TestResults/test-results.xml
